@@ -25,7 +25,7 @@ export default function Scan() {
             Bon
           </Button>
           <Button href="" className="w-1/2 flex justify-center bg-red-600">
-            Rubis
+            Rebut
           </Button>
         </div>
       )}

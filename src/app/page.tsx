@@ -15,12 +15,14 @@ export default async function Page() {
           type="text"
           label="Nom d'utilisateur"
           className=""
+          required={true}
         />
         <Input
           id="password"
           type="password"
           label="Mot de Passe"
           className=""
+          required={true}
         />
         <Button href="" className="bg-gray-600 text-white flex justify-center">
           Soumettre

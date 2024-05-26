@@ -1,11 +1,33 @@
 "use server";
 
-import { createJWT } from "./auth";
+import { redirect } from "next/navigation";
+import { comparePasswords, createJWT, setToken } from "./auth";
 import { getUserByUsername } from "./user";
 
 export async function signin(formData) {
-  const username = formData.get("username");
+  const rawData = {
+    username: formData.get("username"),
+    password: formData.get("password"),
+  };
 
-  const user = await getUserByUsername(username);
-  console.log(await createJWT(user));
+  const user = await getUserByUsername(rawData.username);
+
+  if (!user) {
+    throw Error(
+      "Impossible de se connecter. Le nom d'utilisateur est incorrect."
+    );
+  }
+
+  if (user.password === rawData.password) {
+    console.log("here");
+    const token = createJWT(user);
+    setToken(token);
+    redirect("/home");
+  } else if (await comparePasswords(rawData.password, user.password)) {
+    const token = createJWT(user);
+    setToken(token);
+    redirect("/home");
+  } else {
+    throw Error("Impossible de se connecter. Le mot de passe est incorrect.");
+  }
 }
