@@ -1,7 +1,17 @@
 import { cn } from "@/modules/utils";
 import Link from "next/link";
 
-export default function Button({ children, className, href }) {
+export default function Button({
+  children,
+  className,
+  href,
+  onClick,
+}: {
+  children;
+  className;
+  href;
+  onClick?: any;
+}) {
   if (href) {
     return (
       <Link
@@ -11,7 +21,10 @@ export default function Button({ children, className, href }) {
           className
         )}
       >
-        <button className="flex justify-center items-center gap-2">
+        <button
+          onClick={onClick}
+          className="flex justify-center items-center gap-2"
+        >
           {children}
         </button>
       </Link>

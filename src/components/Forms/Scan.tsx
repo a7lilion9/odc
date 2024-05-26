@@ -24,7 +24,10 @@ export default function Scan() {
           <Button href="" className="w-1/2 flex justify-center bg-green-300">
             Bon
           </Button>
-          <Button href="" className="w-1/2 flex justify-center bg-red-600">
+          <Button
+            href="/error-selection"
+            className="w-1/2 flex justify-center bg-red-600"
+          >
             Rebut
           </Button>
         </div>

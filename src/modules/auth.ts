@@ -20,15 +20,15 @@ export async function hashPassword(password) {
 }
 
 // Protect a route
-export function protect() {
-  const token = getToken();
+export async function protect() {
+  const token = await getToken();
 
   if (!token) {
     return "";
   }
 
   try {
-    const user = verify(token, process.env.JWT_SECRET);
+    const user = await verify(token, process.env.JWT_SECRET);
     return user;
   } catch (e) {
     console.log(e);
