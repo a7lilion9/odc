@@ -3,6 +3,7 @@
 import { redirect } from "next/navigation";
 import { comparePasswords, createJWT, setToken } from "./auth";
 import { getUserByUsername } from "./user";
+import { cookies } from "next/headers";
 
 export async function signin(formData) {
   const rawData = {
@@ -47,4 +48,9 @@ export async function selectError(formData) {
 
 export async function confirmError(formData) {
   redirect("/scan");
+}
+
+export async function signout(formData) {
+  cookies().delete("token");
+  redirect("/");
 }

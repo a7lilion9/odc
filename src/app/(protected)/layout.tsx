@@ -1,8 +1,10 @@
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-nocheck
 
+import Button from "@/components/primitives/Button";
 import Header from "@/components/primitives/Header";
 import Main from "@/components/primitives/Main";
+import { signout } from "@/modules/actions";
 import { protect } from "@/modules/auth";
 import { getUserById } from "@/modules/user";
 
@@ -24,8 +26,10 @@ export default async function Layout({ children }) {
             {payload.username}
           </p>
         </div>
-        <p className="h-[40px] text-[13px] p-1 rounded-lg underline font-bold">
-          Se déconnecter
+        <p className="h-[40px] text-[13px] p-1 rounded-lg underline font-bold flex items-center">
+          <form action={signout}>
+            <Button className="border-none">Se déconnecter</Button>
+          </form>
         </p>
       </div>
       {children}

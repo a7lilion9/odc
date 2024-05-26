@@ -14,16 +14,13 @@ export default function Button({
 }) {
   if (href) {
     return (
-      <Link
-        href={href}
-        className={cn(
-          "border-2 py-2 border-black font-bold flex gap-2 justify-center  items-center",
-          className
-        )}
-      >
+      <Link href={href} className={cn("", className)}>
         <button
           onClick={onClick}
-          className="flex justify-center items-center gap-2"
+          className={cn(
+            "border-2 py-2 border-black font-bold w-full flex justify-center items-center gap-2 pl-1",
+            className
+          )}
         >
           {children}
         </button>

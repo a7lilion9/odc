@@ -7,7 +7,7 @@ import Header from "@/components/primitives/Header";
 
 export default async function Page() {
   return (
-    <Main className="">
+    <Main className="max-w-[400px] mx-auto shadow-md">
       <Header type="sign-in" />
       <Form>
         <Input

@@ -33,8 +33,10 @@ export default function TypeSelection({ ctypes }) {
         <div className="m-12"></div>
         <div className="flex justify-center gap-2">
           <Button href="/home" className="bg-gray-300 w-1/2">
-            <FaArrowAltCircleLeft />
-            <span className="mx-auto">Retour</span>
+            <div className="flex items-center gap-2">
+              <FaArrowAltCircleLeft />
+              <span className="mx-auto">Retour</span>
+            </div>
           </Button>
           <Button href="" className="bg-sky-300 w-1/2 flex justify-center">
             <span className="">Suivant</span>
