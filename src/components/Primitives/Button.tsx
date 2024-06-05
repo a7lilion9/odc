@@ -1,6 +1,8 @@
-const Button = ({ children }) => {
+import { cn } from "@/modules/utils";
+
+const Button = ({ children, className }: {children: any, className?: any}) => {
   return (
-    <button className="bg-white text-[#016db5] w-56 py-4 rounded-full mb-14 uppercase hover:bg-gray-300 active:bg-gray-300">
+    <button className={cn("bg-white text-[#016db5] w-56 py-4 rounded-full mb-10 uppercase hover:bg-gray-300 active:bg-gray-300", className)}>
       {children}
     </button>
   );

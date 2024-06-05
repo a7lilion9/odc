@@ -5,8 +5,7 @@
 html {
   background-color: #016db5;
   color: #fdfefd;
-  max-width: 30rem;
+  max-width: 100vh;
   height: 100%;
-  box-shadow: 0px 0px 2rem rgba(0, 0, 0, 0.5);
   margin: 0 auto;
 }

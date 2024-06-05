@@ -7,7 +7,7 @@ const subtitle = Roboto_Condensed({ weight: ["400"], subsets: ["latin"] });
 const Layout = ({ children }) => {
   return (
     <div>
-      <header className="flex justify-end mr-12 mt-4">
+      <header className="flex justify-end pr-12 pt-4">
         <div>
           <h1 className={cn(title.className, "text-4xl")}>Odyssée</h1>
           <h2

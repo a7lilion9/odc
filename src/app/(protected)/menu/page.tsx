@@ -1,13 +1,16 @@
 import Button from "@/components/Primitives/Button";
+import Container from "@/components/Primitives/Container";
+import Link from "next/link";
 
 const Menu = () => {
   return (
-    <div className="flex flex-col items-center mt-24">
-      <Button>Coulage</Button>
+    <Container>
+      <Link href="/coulage"><Button>Coulage</Button></Link>
       <Button>Emaillage</Button>
       <Button>Cuisson</Button>
       <Button>Triage</Button>
-    </div>
+      <Button>Inspection</Button>
+    </Container>
   );
 };
 
