@@ -19,20 +19,36 @@ export async function hashPassword(password) {
   return await bcrypt.hash(password, 7);
 }
 
+export async function getUserIdFromToken() {
+  const token = await getToken();
+  const user: { id: string } = (await verify(
+    token,
+    process.env.JWT_SECRET
+  )) as any;
+  return user.id;
+}
+
 // Protect a route
 export async function protect() {
   const token = await getToken();
 
   if (!token) {
-    return "";
+    return {
+      status: "error",
+      message: "Username or Password is not correct",
+      data: null,
+    };
   }
 
   try {
     const user = await verify(token, process.env.JWT_SECRET);
-    return user;
+    return { status: "success", message: "", data: user };
   } catch (e) {
-    console.log(e);
-    return;
+    return {
+      status: "error",
+      message: "Username or Password is not correct",
+      data: null,
+    };
   }
 }
 

@@ -1,17 +1,12 @@
-import Button from "@/components/Primitives/Button";
-import Container from "@/components/Primitives/Container";
-import Link from "next/link";
+import Menu from "@/components/ClientParts/Menu";
+import { getUserIdFromToken } from "@/modules/auth";
+import { getUserById } from "@/modules/user";
 
-const Menu = () => {
-  return (
-    <Container>
-      <Link href="/coulage"><Button>Coulage</Button></Link>
-      <Button>Emaillage</Button>
-      <Button>Cuisson</Button>
-      <Button>Triage</Button>
-      <Button>Inspection</Button>
-    </Container>
-  );
+const MenuPage = async () => {
+  const userId = await getUserIdFromToken();
+  const user = await getUserById(userId);
+
+  return <Menu user={user} />;
 };
 
-export default Menu;
+export default MenuPage;

@@ -75,7 +75,7 @@ model Item {
   operations Operation[]
 
   article Article @relation(fields: [articleId], references: [id])
-  user    User?   @relation(fields: [ownerId], references: [id])
+  user    User?   @relation(fields: [ownerId], references: [id]) // A user has access to change the code for an item that lost its code.
 }
 
 model Operation {
@@ -83,9 +83,36 @@ model Operation {
   createdAt DateTime @default(now())
   itemId    String
   userId    String
-  errorId   String
+  errorId   String?
 
-  item  Item  @relation(fields: [itemId], references: [id])
-  user  User  @relation(fields: [userId], references: [id])
-  error Error @relation(fields: [errorId], references: [id])
+  matricule  String
+  shift      String?
+  ncoulee    String?
+  bcoulageId String?
+
+  item     Item      @relation(fields: [itemId], references: [id])
+  user     User      @relation(fields: [userId], references: [id])
+  error    Error?    @relation(fields: [errorId], references: [id])
+  operator Operator  @relation(fields: [matricule], references: [matricule])
+  bcoulage bCoulage? @relation(fields: [bcoulageId], references: [id])
+}
+
+model Operator {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+
+  matricule String  @unique
+  label     String?
+
+  operations Operation[]
+}
+
+// Banc Coulage
+model bCoulage {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+
+  label String
+
+  operations Operation[]
 }

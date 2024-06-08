@@ -2,11 +2,12 @@
 
 import Button from "@/components/Primitives/Button";
 import Container from "@/components/Primitives/Container";
+import { sendOperation } from "@/modules/actions";
 import Link from "next/link";
 import React from "react";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 
-const CoulageScan = () => {
+const CoulageScan = ({ searchParams }) => {
   const [code, setCode] = React.useState("");
   const [codes, setCodes] = React.useState([]);
 
@@ -22,8 +23,10 @@ const CoulageScan = () => {
   }, []);
 
   React.useEffect(() => {
+    console.log(searchParams);
     if (code.length === 8) {
       setCodes([...codes, code]);
+      sendOperation(code);
       notify();
       setCode("");
     }
@@ -31,7 +34,6 @@ const CoulageScan = () => {
 
   return (
     <Container>
-      <p className="py-4 px-8 border-2 border-white">Scan Ici</p>
       <Link className="mt-8" href="/coulage/pre-scan">
         <Button>Retour</Button>
       </Link>
