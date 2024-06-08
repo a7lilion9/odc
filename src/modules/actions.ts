@@ -1,7 +1,12 @@
 "use server";
 
 import { redirect } from "next/navigation";
-import { comparePasswords, createJWT, setToken } from "./auth";
+import {
+  comparePasswords,
+  createJWT,
+  getUserIdFromToken,
+  setToken,
+} from "./auth";
 import { getUserByUsername } from "./user";
 import { cookies } from "next/headers";
 import db from "./db";
@@ -71,5 +76,42 @@ export async function generateBCoulage(formData) {
 }
 
 export async function sendOperation(code) {
-  console.log("Woow from the server", code);
+  /**
+   *    itemId
+   *    userId
+   *    errorId?
+   *    matricule
+   *    shift?
+   *    ncoulee?
+   *    bcoulageId?
+   */
+
+  const userId = await getUserIdFromToken();
+  const user = await db.user.findFirst({
+    where: { id: userId },
+    include: { service: true },
+  });
+
+  // let item = await db.item.findUnique({ where: { code, articleId } });
+  // if (!item) {
+  //   item = await db.item.create({ data: { code, articleId } });
+  // }
+  console.log(user.service.label);
+
+  switch (user.service.label.toLowerCase()) {
+    case "coulage":
+      console.log("coulage");
+      break;
+    default:
+      console.log("There is no such a service in our db");
+  }
+
+  // const itemId = item.id;
+}
+
+export async function preScanAction(formData) {
+  const data = Object.fromEntries(formData.entries());
+  console.log(data);
+
+  // redirect("/")
 }

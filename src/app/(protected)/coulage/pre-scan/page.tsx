@@ -20,7 +20,14 @@ const CoulageScanPage = async () => {
     { id: "3", label: "3" },
   ];
 
-  const data = { nposts, ncoulees, bcoulage, articleTypes };
+  // Matricules
+  const operators = await db.operator.findMany();
+  const matricules = operators.map((operator) => ({
+    id: operator.matricule,
+    label: operator.matricule,
+  }));
+
+  const data = { nposts, ncoulees, bcoulage, articleTypes, matricules };
 
   return <CoulagePreScan data={data} />;
 };

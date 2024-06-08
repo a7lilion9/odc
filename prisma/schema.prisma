@@ -67,7 +67,7 @@ model User {
 model Item {
   id        String   @id @default(uuid())
   createdAt DateTime @default(now())
-  code      String
+  code      String   @unique
   oldCode   String?
   ownerId   String?
   articleId String
