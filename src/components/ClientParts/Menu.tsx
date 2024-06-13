@@ -19,9 +19,10 @@ const Menu = ({ user }) => {
       <Button disabled={user?.role !== "cuisson-user"}>Cuisson</Button>
       <Button disabled={user?.role !== "triage-user"}>Triage</Button>
       <Button disabled={user?.role !== "inspection-user"}>Inspection</Button>
-      <form action={signout}>
+      <form className="absolute bottom-2" action={signout}>
         <Button className="border-2 border-red-500">Deconnecter</Button>
       </form>
+      <div className="mt-8"></div>
     </Container>
   );
 };

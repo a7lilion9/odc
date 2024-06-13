@@ -27,7 +27,17 @@ const CoulageScanPage = async () => {
     label: operator.matricule,
   }));
 
-  const data = { nposts, ncoulees, bcoulage, articleTypes, matricules };
+  // Manager
+  const managers = await db.manager.findMany();
+
+  const data = {
+    nposts,
+    ncoulees,
+    bcoulage,
+    articleTypes,
+    matricules,
+    managers,
+  };
 
   return <CoulagePreScan data={data} />;
 };

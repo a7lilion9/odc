@@ -15,20 +15,27 @@ model Service {
   createdAt DateTime @default(now())
   label     String
 
-  users  User[]
-  errors Error[]
+  users User[]
 }
 
-model Error {
+model ErrorType {
   id        String   @id @default(uuid())
   createdAt DateTime @default(now())
-  label     String
-  serviceId String
 
-  operations Operation[]
-
-  service Service @relation(fields: [serviceId], references: [id])
+  label String
 }
+
+// model Error {
+//   id        String   @id @default(uuid())
+//   createdAt DateTime @default(now())
+//   label     String
+//   serviceId String
+//   errorType String?
+
+//   operations Operation[]
+
+//   service Service @relation(fields: [serviceId], references: [id])
+// }
 
 model Type {
   id        String   @id @default(uuid())
@@ -83,17 +90,18 @@ model Operation {
   createdAt DateTime @default(now())
   itemId    String
   userId    String
-  errorId   String?
 
   matricule  String
+  managerId  String
   shift      String?
   ncoulee    String?
   bcoulageId String?
+  error      String?
 
   item     Item      @relation(fields: [itemId], references: [id])
   user     User      @relation(fields: [userId], references: [id])
-  error    Error?    @relation(fields: [errorId], references: [id])
   operator Operator  @relation(fields: [matricule], references: [matricule])
+  manager  Manager   @relation(fields: [managerId], references: [id])
   bcoulage bCoulage? @relation(fields: [bcoulageId], references: [id])
 }
 
@@ -103,6 +111,15 @@ model Operator {
 
   matricule String  @unique
   label     String?
+
+  operations Operation[]
+}
+
+model Manager {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+
+  label String @unique
 
   operations Operation[]
 }

@@ -19,7 +19,7 @@ const Select = ({
       required={required}
       value={value}
       name={name}
-      className="bg-[#016db5] border-b-2 py-2 w-80 outline-none uppercase my-2 text-xl"
+      className="bg-[#016db5] border-b-2 py-2 w-80 outline-none uppercase my-2 text-[1rem]"
     >
       <option value="">{title}</option>
       {data?.map((e) => (

@@ -59,6 +59,12 @@ const CoulagePreScan = ({ data }) => {
           data={data.bcoulage}
           title="Banc de Coulage"
         />
+        <Select
+          required={true}
+          name="manager"
+          data={data.managers}
+          title="Chef de Secteur"
+        />
 
         {/* /coulage/scan?matricule=x&shift=x&ncoulee=x&type=x&famille=x&article=x&bcoulage=x */}
         <Button className="mt-4">Scanner</Button>

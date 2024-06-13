@@ -26,7 +26,7 @@ const CoulageScan = ({ searchParams }) => {
     console.log(searchParams);
     if (code.length === 8) {
       setCodes([...codes, code]);
-      sendOperation(code);
+      sendOperation(code, searchParams);
       notify();
       setCode("");
     }
@@ -34,9 +34,9 @@ const CoulageScan = ({ searchParams }) => {
 
   return (
     <Container>
-      <Link className="mt-8" href="/coulage/pre-scan">
-        <Button>Retour</Button>
-      </Link>
+      <Button className="mt-8" onClick={() => window.history.back()}>
+        Retour
+      </Button>
     </Container>
   );
 };

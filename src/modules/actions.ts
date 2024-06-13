@@ -10,6 +10,7 @@ import {
 import { getUserByUsername } from "./user";
 import { cookies } from "next/headers";
 import db from "./db";
+import { toast } from "react-toastify";
 
 export async function signin(formData) {
   const rawData = {
@@ -75,7 +76,7 @@ export async function generateBCoulage(formData) {
   await db.bCoulage.createMany({ data });
 }
 
-export async function sendOperation(code) {
+export async function sendOperation(code, data) {
   /**
    *    itemId
    *    userId
@@ -92,15 +93,32 @@ export async function sendOperation(code) {
     include: { service: true },
   });
 
-  // let item = await db.item.findUnique({ where: { code, articleId } });
-  // if (!item) {
-  //   item = await db.item.create({ data: { code, articleId } });
-  // }
-  console.log(user.service.label);
+  let item = await db.item.findUnique({
+    where: { code },
+  });
+  if (!item || !item.id) {
+    if (data.error) {
+      throw Error("item is not available, please create the item first");
+    }
+    item = await db.item.create({ data: { code, articleId: data.article } });
+  }
+  console.log(data);
 
+  let operation;
   switch (user.service.label.toLowerCase()) {
     case "coulage":
-      console.log("coulage");
+      operation = await db.operation.create({
+        data: {
+          itemId: item.id,
+          userId: user.id,
+          error: data.error,
+          matricule: data.operator,
+          managerId: data.manager,
+          shift: data.shift ?? null,
+          ncoulee: data.ncoulee ?? null,
+          bcoulageId: data.bcoulage ?? null,
+        },
+      });
       break;
     default:
       console.log("There is no such a service in our db");
@@ -111,7 +129,20 @@ export async function sendOperation(code) {
 
 export async function preScanAction(formData) {
   const data = Object.fromEntries(formData.entries());
-  console.log(data);
+  const searchParams = new URLSearchParams(data).toString();
+  console.log();
 
-  // redirect("/")
+  redirect(`/scan?${searchParams}`);
+}
+
+export async function rebutCoulageAction(formData) {
+  const data = Object.fromEntries(formData.entries());
+  const searchParams = new URLSearchParams(data).toString();
+  console.log();
+
+  redirect(`/coulage/rebut-1?${searchParams}`);
+}
+
+export async function test() {
+  console.log("hello from test");
 }
