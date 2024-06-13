@@ -1,6 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -14,35 +11,20 @@ model Service {
   id        String   @id @default(uuid())
   createdAt DateTime @default(now())
   label     String
-
-  users User[]
+  users     User[]
 }
 
 model ErrorType {
   id        String   @id @default(uuid())
   createdAt DateTime @default(now())
-
-  label String
+  label     String
 }
 
-// model Error {
-//   id        String   @id @default(uuid())
-//   createdAt DateTime @default(now())
-//   label     String
-//   serviceId String
-//   errorType String?
-
-//   operations Operation[]
-
-//   service Service @relation(fields: [serviceId], references: [id])
-// }
-
 model Type {
-  id        String   @id @default(uuid())
-  createdAt DateTime @default(now())
+  id        String    @id @default(uuid())
+  createdAt DateTime  @default(now())
   label     String
-
-  articles Article[]
+  articles  Article[]
 }
 
 model Article {
@@ -50,86 +32,71 @@ model Article {
   createdAt DateTime @default(now())
   label     String
   typeId    String
-
-  items Item[]
-
-  type Type @relation(fields: [typeId], references: [id])
+  type      Type     @relation(fields: [typeId], references: [id])
+  items     Item[]
 }
 
 model User {
-  id        String   @id @default(uuid())
-  createdAt DateTime @default(now())
-  username  String   @unique
-  password  String
-  fullName  String
-  role      String
-  serviceId String
-
+  id         String      @id @default(uuid())
+  createdAt  DateTime    @default(now())
+  username   String      @unique
+  password   String
+  fullName   String
+  role       String
+  serviceId  String
   items      Item[]
   operations Operation[]
-
-  service Service @relation(fields: [serviceId], references: [id])
+  service    Service     @relation(fields: [serviceId], references: [id])
 }
 
 model Item {
-  id        String   @id @default(uuid())
-  createdAt DateTime @default(now())
-  code      String   @unique
-  oldCode   String?
-  ownerId   String?
-  articleId String
-
+  id         String      @id @default(uuid())
+  createdAt  DateTime    @default(now())
+  code       String      @unique
+  oldCode    String?
+  ownerId    String?
+  articleId  String
+  user       User?       @relation(fields: [ownerId], references: [id])
+  article    Article     @relation(fields: [articleId], references: [id])
   operations Operation[]
-
-  article Article @relation(fields: [articleId], references: [id])
-  user    User?   @relation(fields: [ownerId], references: [id]) // A user has access to change the code for an item that lost its code.
 }
 
 model Operation {
-  id        String   @id @default(uuid())
-  createdAt DateTime @default(now())
-  itemId    String
-  userId    String
-
+  id         String    @id @default(uuid())
+  createdAt  DateTime  @default(now())
+  itemId     String
+  userId     String
   matricule  String
   managerId  String
   shift      String?
   ncoulee    String?
   bcoulageId String?
   error      String?
-
-  item     Item      @relation(fields: [itemId], references: [id])
-  user     User      @relation(fields: [userId], references: [id])
-  operator Operator  @relation(fields: [matricule], references: [matricule])
-  manager  Manager   @relation(fields: [managerId], references: [id])
-  bcoulage bCoulage? @relation(fields: [bcoulageId], references: [id])
+  bcoulage   bCoulage? @relation(fields: [bcoulageId], references: [id])
+  manager    Manager   @relation(fields: [managerId], references: [id])
+  operator   Operator  @relation(fields: [matricule], references: [matricule])
+  user       User      @relation(fields: [userId], references: [id])
+  item       Item      @relation(fields: [itemId], references: [id])
 }
 
 model Operator {
-  id        String   @id @default(uuid())
-  createdAt DateTime @default(now())
-
-  matricule String  @unique
-  label     String?
-
+  id         String      @id @default(uuid())
+  createdAt  DateTime    @default(now())
+  matricule  String      @unique
+  label      String?
   operations Operation[]
 }
 
 model Manager {
-  id        String   @id @default(uuid())
-  createdAt DateTime @default(now())
-
-  label String @unique
-
+  id         String      @id @default(uuid())
+  createdAt  DateTime    @default(now())
+  label      String      @unique
   operations Operation[]
 }
 
-// Banc Coulage
 model bCoulage {
-  id        String   @id @default(uuid())
-  createdAt DateTime @default(now())
-
-  label String
-
+  id         String      @id @default(uuid())
+  createdAt  DateTime    @default(now())
+  label      String
   operations Operation[]
 }

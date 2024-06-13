@@ -12,7 +12,7 @@ import { cookies } from "next/headers";
 import db from "./db";
 import { toast } from "react-toastify";
 
-export async function signin(formData) {
+export async function signin(formData: any) {
   const rawData = {
     username: formData.get("username").toLowerCase(),
     password: formData.get("password").toLowerCase(),
@@ -38,7 +38,7 @@ export async function signin(formData) {
   }
 }
 
-export async function selectArticle(formData) {
+export async function selectArticle(formData: any) {
   const rawData = {
     type: formData.get("type"),
     article: formData.get("article"),
@@ -48,20 +48,20 @@ export async function selectArticle(formData) {
   redirect("/scan");
 }
 
-export async function selectError(formData) {
+export async function selectError(formData: any) {
   redirect("/error-confirmation");
 }
 
-export async function confirmError(formData) {
+export async function confirmError(formData: any) {
   redirect("/scan");
 }
 
-export async function signout(formData) {
+export async function signout(formData: any) {
   cookies().delete("token");
   redirect("/");
 }
 
-export async function generateBCoulage(formData) {
+export async function generateBCoulage(formData: any) {
   await db.bCoulage.deleteMany();
 
   const data = [];
@@ -76,7 +76,7 @@ export async function generateBCoulage(formData) {
   await db.bCoulage.createMany({ data });
 }
 
-export async function sendOperation(code, data) {
+export async function sendOperation(code: any, data: any) {
   /**
    *    itemId
    *    userId
@@ -102,21 +102,46 @@ export async function sendOperation(code, data) {
     }
     item = await db.item.create({ data: { code, articleId: data.article } });
   }
-  console.log(data);
+  console.log({data, item});
 
-  let operation;
+  let operation: any;
   switch (user.service.label.toLowerCase()) {
     case "coulage":
       operation = await db.operation.create({
         data: {
-          itemId: item.id,
-          userId: user.id,
+          // itemId: item.id,
+          // userId: user.id,
           error: data.error,
-          matricule: data.operator,
-          managerId: data.manager,
+          // matricule: data.operator,
+          // managerId: data.manager,
           shift: data.shift ?? null,
           ncoulee: data.ncoulee ?? null,
-          bcoulageId: data.bcoulage ?? null,
+          // bcoulageId: data.bcoulage ?? null,
+          bcoulage: {
+            connect: {
+              id: data.bcoulage ?? null,
+            }
+          },
+          manager: {
+            connect: {
+              id: data.manager,
+            }
+          },
+          operator: {
+            connect: {
+              matricule: data.matricule,
+            }
+          },
+          item: {
+            connect: {
+              id: item.id,
+            }
+          },
+          user: {
+            connect: {
+              id: user.id,
+            }
+          }
         },
       });
       break;
