@@ -94,15 +94,15 @@ export async function sendOperation(code: any, data: any) {
     include: { service: true },
   });
 
-  // let item = await db.item.findUnique({
-  //   where: { code },
-  // });
-  // if (!item || !item.id) {
-  //   if (data.error) {
-  //     throw Error("item is not available, please create the item first");
-  //   }
-  //   item = await db.item.create({ data: { code, articleId: data.article } });
-  // // }
+  let item = await db.item.findUnique({
+    where: { code },
+  });
+  if (!item || !item.id) {
+    if (data.error) {
+      throw Error("item is not available, please create the item first");
+    }
+    item = await db.item.create({ data: { code, articleId: data.article } });
+  }
   // console.log({data, item});
 
   let operation: any;
@@ -125,19 +125,13 @@ export async function sendOperation(code: any, data: any) {
           },
           operator: {
             connect: {
-              matricule: data.matricule,
+              matricule: data.operator,
             }
           },
           item: {
-            connectOrCreate: {
-              where: {
-                code,
-              },
-              create: {
-                code,
-                article: {connect: {id: data.article}}
-              }
-            },
+            connect: {
+              code,
+            }
           },
           user: {
             connect: {

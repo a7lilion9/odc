@@ -15,6 +15,8 @@ const RebutCoulagePage = async () => {
     label: operator.matricule,
   }));
 
+  const bcoulage = await db.bCoulage.findMany();
+
   console.log({ matricules });
   return (
     <Container>
@@ -31,6 +33,12 @@ const RebutCoulagePage = async () => {
           name="manager"
           title="Chef de Secteur"
         />
+          <Select
+              required={true}
+              data={bcoulage}
+              name="bcoulage"
+              title="Banc Coulage"
+          />
         <Select
           required={true}
           data={matricules}
