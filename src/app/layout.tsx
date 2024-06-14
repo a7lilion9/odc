@@ -21,7 +21,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <ToastContainer autoClose={1000} />
-        <div>{children}</div>
+        <div className="ml-4">{children}</div>
       </body>
     </html>
   );

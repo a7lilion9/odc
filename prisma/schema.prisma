@@ -76,7 +76,7 @@ model Operation {
   manager    Manager   @relation(fields: [managerId], references: [id])
   operator   Operator  @relation(fields: [matricule], references: [matricule])
   user       User      @relation(fields: [userId], references: [id])
-  item       Item      @relation(fields: [itemId], references: [id])
+  item       Item      @relation(fields: [itemId], references: [id], onDelete: Cascade)
 }
 
 model Operator {

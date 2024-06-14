@@ -5,6 +5,19 @@
 html {
   background-color: #016db5;
   color: #fdfefd;
-  max-width: 100vh;
   margin: 0 auto;
+}
+
+@media only screen and (max-width: 600px) {
+  html {
+    max-width: 100vh;
+  }
+}
+
+tr {
+  border-bottom: 2px solid skyblue;
+}
+
+th, td {
+  padding: .3rem 2rem;
 }

@@ -11,6 +11,7 @@ import { getUserByUsername } from "./user";
 import { cookies } from "next/headers";
 import db from "./db";
 import { toast } from "react-toastify";
+import {revalidatePath} from "next/cache";
 
 export async function signin(formData: any) {
   const rawData = {
@@ -93,30 +94,25 @@ export async function sendOperation(code: any, data: any) {
     include: { service: true },
   });
 
-  let item = await db.item.findUnique({
-    where: { code },
-  });
-  if (!item || !item.id) {
-    if (data.error) {
-      throw Error("item is not available, please create the item first");
-    }
-    item = await db.item.create({ data: { code, articleId: data.article } });
-  }
-  console.log({data, item});
+  // let item = await db.item.findUnique({
+  //   where: { code },
+  // });
+  // if (!item || !item.id) {
+  //   if (data.error) {
+  //     throw Error("item is not available, please create the item first");
+  //   }
+  //   item = await db.item.create({ data: { code, articleId: data.article } });
+  // // }
+  // console.log({data, item});
 
   let operation: any;
   switch (user.service.label.toLowerCase()) {
     case "coulage":
       operation = await db.operation.create({
         data: {
-          // itemId: item.id,
-          // userId: user.id,
           error: data.error,
-          // matricule: data.operator,
-          // managerId: data.manager,
           shift: data.shift ?? null,
           ncoulee: data.ncoulee ?? null,
-          // bcoulageId: data.bcoulage ?? null,
           bcoulage: {
             connect: {
               id: data.bcoulage ?? null,
@@ -133,13 +129,19 @@ export async function sendOperation(code: any, data: any) {
             }
           },
           item: {
-            connect: {
-              id: item.id,
-            }
+            connectOrCreate: {
+              where: {
+                code,
+              },
+              create: {
+                code,
+                article: {connect: {id: data.article}}
+              }
+            },
           },
           user: {
             connect: {
-              id: user.id,
+              id: userId,
             }
           }
         },
@@ -149,7 +151,7 @@ export async function sendOperation(code: any, data: any) {
       console.log("There is no such a service in our db");
   }
 
-  // const itemId = item.id;
+  revalidatePath('/display/operations');
 }
 
 export async function preScanAction(formData) {
