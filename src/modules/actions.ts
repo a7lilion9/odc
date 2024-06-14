@@ -152,6 +152,7 @@ export async function sendOperation(code: any, data: any) {
   }
 
   revalidatePath('/display/operations');
+  console.log('revalidated cache');
 }
 
 export async function preScanAction(formData) {

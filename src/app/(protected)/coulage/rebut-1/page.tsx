@@ -10,10 +10,10 @@ const RebutCoulagePage = async ({searchParams}) => {
     return (
         <Container>
             <div className="flex flex-col items-center gap-4">
-                <Link href={`/scan?${urlParams}&error=rebut-demoulage`}>
+                <Link href={`/coulage/rebut-final?${urlParams}&error=rebut-demoulage`}>
                     <Button>Rebut Demoulage</Button>
                 </Link>
-                <Link href={`/scan?${urlParams}&error=rebut-finition`}>
+                <Link href={`/coulage/rebut-final?${urlParams}&error=rebut-finition`}>
                     <Button>Rebut Finition</Button>
                 </Link>
             </div>

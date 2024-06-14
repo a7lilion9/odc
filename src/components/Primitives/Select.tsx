@@ -8,7 +8,7 @@ const Select = ({
 }: {
   name: string;
   data?: any;
-  title: any;
+  title?: any;
   onChange?: any;
   value?: any;
   required?: any;

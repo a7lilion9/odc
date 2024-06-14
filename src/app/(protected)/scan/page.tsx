@@ -6,6 +6,7 @@ import { sendOperation } from "@/modules/actions";
 import Link from "next/link";
 import React from "react";
 import { toast } from "react-toastify";
+import {revalidatePath} from "next/cache";
 
 const CoulageScan = ({ searchParams }) => {
   const [code, setCode] = React.useState("");
