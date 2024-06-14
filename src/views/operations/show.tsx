@@ -13,7 +13,7 @@ export default function ShowView({data}) {
                 <th>Shift</th>
                 <th>NCoulee</th>
                 <th>Banc Coulage</th>
-                <th>Erreur</th>
+                <th>Etat</th>
             </tr>
             </thead>
             <tbody>

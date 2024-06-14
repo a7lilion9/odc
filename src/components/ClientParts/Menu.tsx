@@ -6,6 +6,8 @@ import Button from "../Primitives/Button";
 import { signout } from "@/modules/actions";
 import React from "react";
 
+
+
 const Menu = ({ user }) => {
   React.useEffect(() => {
     console.log("hello", user.role);
@@ -15,8 +17,9 @@ const Menu = ({ user }) => {
       <Link href="/coulage">
         <Button disabled={user?.role !== "coulage-user"}>Coulage</Button>
       </Link>
-      <Button disabled={user?.role !== "emaillage-user"}>Emaillage</Button>
-      <Button disabled={user?.role !== "cuisson-user"}>Cuisson</Button>
+      <Link href="/coulage">
+          <Button disabled={user?.role !== "coulage-user"}>Cuisson</Button>
+      </Link>
       <Button disabled={user?.role !== "triage-user"}>Triage</Button>
       <Button disabled={user?.role !== "inspection-user"}>Inspection</Button>
       <form className="absolute bottom-2" action={signout}>

@@ -9,7 +9,7 @@ const Button = ({
   children: any;
   className?: any;
   onClick?: any;
-  disabled?: any;
+  disabled?: boolean;
 }) => {
   if (disabled) {
     return (
@@ -32,7 +32,6 @@ const Button = ({
         className
       )}
       onClick={onClick}
-      disabled={disabled}
     >
       {children}
     </button>
